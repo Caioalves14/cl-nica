@@ -5,7 +5,13 @@
   "projects": {
     "Clinica-Frontend": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component":{
+          "style":"css",
+          "skipTests": true,
+          "standalone": false
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -96,5 +102,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "0badf571-a0fd-4135-a1cd-1b5284c98536"
   }
 }
