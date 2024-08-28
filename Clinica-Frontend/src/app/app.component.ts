@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ButtonModule } from 'primeng/button'; // Importando diretamente no componente
+import { PagesModule } from './pages/pages.module';
+import { ComponentsModule } from './components/components.module';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule],
-  template: '<router-outlet></router-outlet>', 
+  imports: [RouterOutlet, ComponentsModule, PagesModule],
+  template: '<router-outlet></router-outlet>',
 })
 export class AppComponent {
   title = 'Clinica-Frontend';

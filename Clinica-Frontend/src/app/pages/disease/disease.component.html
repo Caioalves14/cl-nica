@@ -1,0 +1,71 @@
+<p-card>
+  <p-tabView>
+    <!-- Aba de Listagem de Doenças -->
+    <p-tabPanel header="Listar Doenças">
+      <p-table [value]="diseases">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>CID</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-disease>
+          <tr>
+            <td>{{ disease.cid }}</td>
+            <td>{{ disease.nome }}</td>
+            <td>{{ disease.descricao }}</td>
+            <td>
+              <button pButton type="button" icon="pi pi-pencil" (click)="onSelectDisease(disease)"></button>
+              <button pButton type="button" icon="pi pi-trash" (click)="onDeleteDisease(disease.cid)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+
+    <!-- Aba de Cadastro/Edição de Doenças -->
+    <p-tabPanel header="Cadastrar/Editar Doença">
+      <form (ngSubmit)="onSaveDisease()">
+        <p-fieldset legend="Detalhes da Doença">
+          <div class="p-fluid">
+            <div class="p-field">
+              <label for="cid">CID</label>
+              <input
+                id="cid"
+                pInputText
+                [(ngModel)]="selectedDisease.cid"
+                name="cid"
+                required
+                [readonly]="selectedDisease.cid !== ''"
+              />
+            </div>
+            <div class="p-field">
+              <label for="nome">Nome</label>
+              <input
+                id="nome"
+                pInputText
+                [(ngModel)]="selectedDisease.nome"
+                name="nome"
+                required
+              />
+            </div>
+            <div class="p-field">
+              <label for="descricao">Descrição</label>
+              <textarea
+                id="descricao"
+                pInputTextarea
+                [(ngModel)]="selectedDisease.descricao"
+                name="descricao"
+                required
+              ></textarea>
+            </div>
+          </div>
+        </p-fieldset>
+        <p-button label="Salvar" type="submit"></p-button>
+        <p-button label="Cancelar" type="button" class="p-button-secondary" (click)="onCancel()"></p-button>
+      </form>
+    </p-tabPanel>
+  </p-tabView>
+</p-card>

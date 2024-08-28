@@ -1,0 +1,10 @@
+<p-card header="Relatórios">
+  <div class="p-mb-4">
+    <p>Lista de relatórios gerados:</p>
+    <ul>
+      <li *ngFor="let report of reports">
+        {{ report.name }} - {{ report.date }}
+      </li>
+    </ul>
+  </div>
+</p-card>

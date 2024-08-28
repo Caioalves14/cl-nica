@@ -1,0 +1,57 @@
+<p-card>
+  <p-tabView>
+    <!-- Aba de Listagem de Todas as Prescrições -->
+    <p-tabPanel header="Todas as Prescrições">
+      <p-table [value]="prescriptions">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Número</th>
+            <th>Paciente</th>
+            <th>Doença</th>
+            <th>Medicamento</th>
+            <th>Data da Consulta</th>
+            <th>Tratamento</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-prescription>
+          <tr>
+            <td>{{ prescription.numero }}</td>
+            <td>{{ prescription.paciente }}</td>
+            <td>{{ prescription.doenca }}</td>
+            <td>{{ prescription.medicamento }}</td>
+            <td>{{ prescription.dataConsulta | date }}</td>
+            <td>{{ prescription.tratamento }}</td>
+            <td>{{ prescription.status }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+
+    <!-- Aba de Listagem de Prescrições Atrasadas -->
+    <p-tabPanel header="Prescrições Atrasadas">
+      <p-table [value]="latePrescriptions">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Número</th>
+            <th>Paciente</th>
+            <th>Doença</th>
+            <th>Medicamento</th>
+            <th>Data da Revisão</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-prescription>
+          <tr>
+            <td>{{ prescription.numero }}</td>
+            <td>{{ prescription.paciente }}</td>
+            <td>{{ prescription.doenca }}</td>
+            <td>{{ prescription.medicamento }}</td>
+            <td>{{ prescription.dataConsulta | date:'shortDate' }}</td>
+            <td>{{ prescription.status }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+  </p-tabView>
+</p-card>
