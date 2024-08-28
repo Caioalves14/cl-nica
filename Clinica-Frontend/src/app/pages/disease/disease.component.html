@@ -1,0 +1,39 @@
+<p-card>
+  <form (ngSubmit)="onSubmit()" #diseaseForm="ngForm">
+    <p-fieldset legend="Disease Details">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="cid">CID</label>
+          <input
+            id="cid"
+            pInputText
+            [(ngModel)]="disease.cid"
+            name="cid"
+            required
+          />
+        </div>
+        <div class="p-field">
+          <label for="name">Name</label>
+          <input
+            id="name"
+            pInputText
+            [(ngModel)]="disease.name"
+            name="name"
+            required
+          />
+        </div>
+        <div class="p-field">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            pInputTextarea
+            [(ngModel)]="disease.description"
+            name="description"
+            required
+          ></textarea>
+        </div>
+      </div>
+    </p-fieldset>
+    <p-button label="Save" type="submit"></p-button>
+  </form>
+</p-card>

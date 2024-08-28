@@ -1,0 +1,80 @@
+<p-card>
+  <form (ngSubmit)="onSubmit()" #prescriptionForm="ngForm">
+    <p-fieldset legend="Prescription Details">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="number">Number</label>
+          <input
+            id="number"
+            pInputText
+            [(ngModel)]="prescription.number"
+            name="number"
+            required
+          />
+        </div>
+        <div class="p-field">
+          <label for="pacient">Patient</label>
+          <p-dropdown
+            id="pacient"
+            [options]="pacients"
+            [(ngModel)]="prescription.pacient"
+            optionLabel="name"
+            name="pacient"
+            required
+          />
+        </div>
+        <div class="p-field">
+          <label for="disease">Disease</label>
+          <p-dropdown
+            id="disease"
+            [options]="diseases"
+            [(ngModel)]="prescription.disease"
+            optionLabel="name"
+            name="disease"
+            required
+          />
+        </div>
+        <div class="p-field">
+          <label for="medicine">Medicine</label>
+          <input
+            id="medicine"
+            pInputText
+            [(ngModel)]="prescription.medicine"
+            name="medicine"
+            required
+          />
+        </div>
+        <div class="p-field">
+          <label for="consultationDate">Consultation Date</label>
+          <p-calendar
+            id="consultationDate"
+            [(ngModel)]="prescription.consultationDate"
+            name="consultationDate"
+            required
+          />
+        </div>
+        <div class="p-field">
+          <label for="treatment">Treatment</label>
+          <textarea
+            id="treatment"
+            pInputTextarea
+            [(ngModel)]="prescription.treatment"
+            name="treatment"
+            required
+          ></textarea>
+        </div>
+        <div class="p-field">
+          <label for="status">Status</label>
+          <p-dropdown
+            id="status"
+            [options]="statusOptions"
+            [(ngModel)]="prescription.status"
+            name="status"
+            required
+          />
+        </div>
+      </div>
+    </p-fieldset>
+    <p-button label="Save" type="submit"></p-button>
+  </form>
+</p-card>
