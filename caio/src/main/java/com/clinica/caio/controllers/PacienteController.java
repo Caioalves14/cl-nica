@@ -19,7 +19,7 @@ public class PacienteController {
     /**
      * Endpoint para cadastrar um novo paciente.
      */
-    @PostMapping
+    @PostMapping("/criar")
     public ResponseEntity<Paciente> cadastrarPaciente(@RequestBody Paciente paciente) {
         Paciente novoPaciente = pacienteService.save(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPaciente);

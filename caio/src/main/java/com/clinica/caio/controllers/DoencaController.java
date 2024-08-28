@@ -29,7 +29,7 @@ public class DoencaController {
         return doencaService.listarTodas();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("buscar/{id}")
     public ResponseEntity<Doenca> buscarPorId(@PathVariable String id) {
         Optional<Doenca> doenca = doencaService.buscarPorId(id);
         if(doenca.isPresent()){
@@ -39,12 +39,12 @@ public class DoencaController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/criar")
     public Doenca criar(@RequestBody Doenca doenca) {
         return doencaService.salvar(doenca);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<Doenca> atualizar(@PathVariable String id, @RequestBody Doenca doenca){
         if (!doencaService.buscarPorId(id).isPresent()) {
             return ResponseEntity.notFound().build();
@@ -53,7 +53,7 @@ public class DoencaController {
         return ResponseEntity.ok(doencaService.salvar(doenca));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete{id}")
     public ResponseEntity<Void> deletar(@PathVariable String id){
         if (!doencaService.buscarPorId(id).isPresent()) {
             return ResponseEntity.notFound().build();
