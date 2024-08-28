@@ -1,24 +1,34 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Pacient } from '../models/pacient';
-import { Prescription } from '../models/prescription'
 
 @Injectable({
   providedIn: 'root'
 })
 export class PacientService {
+  private apiUrl = 'http://localhost:8080/pacientes';
 
-  private pacients: Pacient[] = [];  // Aqui você teria a lógica para buscar os pacientes de uma API ou banco de dados.
+  constructor(private http: HttpClient) {}
 
-  getPacients(): Promise<Pacient[]> {
-    // Simulação de uma chamada API
-    return Promise.resolve(this.pacients);
+  getPacients(): Observable<Pacient[]> {
+    return this.http.get<Pacient[]>(this.apiUrl);
   }
 
-  getLatePrescriptions(): Promise<Prescription[]> {
-    // Simulação de uma chamada API para pegar prescrições atrasadas.
-    // Implementação fictícia.
-    return Promise.resolve([]);
+  getPacientByCpf(cpf: string): Observable<Pacient> {
+    return this.http.get<Pacient>(`${this.apiUrl}/buscar-por-cpf?cpf=${cpf}`);
   }
 
-  // Outros métodos relacionados ao paciente, como adicionar, atualizar, excluir, etc.
+  updatePacient(cpf: string, pacient: Pacient): Observable<Pacient> {
+    return this.http.put<Pacient>(`${this.apiUrl}/${cpf}`, pacient);
+  }
+
+  addPacient(pacient: Pacient): Observable<Pacient> {
+    return this.http.post<Pacient>(this.apiUrl, pacient);
+  }
+
+  // Novo método para buscar pacientes em tratamento
+  getPacientsInTreatment(): Observable<Pacient[]> {
+    return this.http.get<Pacient[]>(`${this.apiUrl}/em-tratamento`);
+  }
 }

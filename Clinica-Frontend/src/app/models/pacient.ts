@@ -1,9 +1,7 @@
 export interface Pacient {
-  id?: string;
   cpf: string;
-  name: string;
-  age: number;
-  address: string;
-  phone: string;
-  status: string;
+  nome: string;
+  idade: number;
+  endereco: string;
+  telefone: string;
 }
