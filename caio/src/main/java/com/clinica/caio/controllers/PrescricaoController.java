@@ -37,11 +37,11 @@ public class PrescricaoController {
         return ResponseEntity.ok(prescricaoAtualizadaResult);
     }
 
-    // @GetMapping
-    // public ResponseEntity<List<Prescricao>> listarTodasPrescricoes() {
-    //     List<Prescricao> prescricoes = prescricaoService.listarTodasPrescricoes();
-    //     return ResponseEntity.ok(prescricoes);
-    // }
+    @GetMapping
+    public ResponseEntity<List<Prescricao>> listarTodasPrescricoes() {
+        List<Prescricao> prescricoes = prescricaoService.listarTodasPrescricoes();
+        return ResponseEntity.ok(prescricoes);
+    }
 
     @GetMapping("/{numero}")
     public ResponseEntity<Prescricao> buscarPrescricaoPorNumero(@PathVariable Long numero) {

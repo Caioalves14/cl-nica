@@ -74,4 +74,8 @@ public class PrescricaoService {
 
         return prescricaoRepository.save(prescricao);
     }
+
+    public List<Prescricao> listarTodasPrescricoes(){
+        return prescricaoRepository.findAll();
+    }
 }

@@ -28,7 +28,7 @@ public class PacienteController {
     /**
      * Endpoint para atualizar um paciente existente.
      */
-    @PutMapping("/{id}")
+    @PutMapping("/atualizar{id}")
     public ResponseEntity<Paciente> atualizarPaciente(@PathVariable String id, @RequestBody Paciente pacienteAtualizado) {
         Paciente pacienteAtualizadoResult = pacienteService.atualizarPaciente(id, pacienteAtualizado);
         return ResponseEntity.ok(pacienteAtualizadoResult);
@@ -37,7 +37,7 @@ public class PacienteController {
     /**
      * Endpoint para excluir um paciente pelo ID.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete{id}")
     public ResponseEntity<Void> excluirPaciente(@PathVariable String id) {
         pacienteService.deleteByCpf(id);
         return ResponseEntity.noContent().build();
@@ -73,9 +73,9 @@ public class PacienteController {
     /**
      * Endpoint para listar todos os pacientes.
      */
-    // @GetMapping
-    // public ResponseEntity<List<Paciente>> listarTodosPacientes() {
-    //     List<Paciente> pacientes = pacienteService.listarTodosPacientes();
-    //     return ResponseEntity.ok(pacientes);
-    // }
+     @GetMapping
+     public ResponseEntity<List<Paciente>> listarTodosPacientes() {
+         List<Paciente> pacientes = pacienteService.listarTodosPacientes();
+         return ResponseEntity.ok(pacientes);
+    }
 }

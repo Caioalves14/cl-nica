@@ -55,4 +55,8 @@ public class PacienteService {
 
         return pacienteRepository.save(pacienteAtualizado);
     }
+
+    public List <Paciente> listarTodosPacientes(){
+        return pacienteRepository.findAll();
+    }
 }
