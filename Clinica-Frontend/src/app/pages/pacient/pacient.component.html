@@ -1,51 +1,65 @@
 <p-card>
-  <p-tabView>
-    <!-- Aba de Listagem de Todos os Pacientes -->
-    <p-tabPanel header="Todos os Pacientes">
-      <p-table [value]="pacients">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>CPF</th>
-            <th>Nome</th>
-            <th>Idade</th>
-            <th>Endereço</th>
-            <th>Telefone</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-pacient>
-          <tr>
-            <td>{{ pacient.cpf }}</td>
-            <td>{{ pacient.nome }}</td>
-            <td>{{ pacient.idade }}</td>
-            <td>{{ pacient.endereco }}</td>
-            <td>{{ pacient.telefone }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-tabPanel>
+  <p-toast></p-toast> <!-- Adicionei o p-toast aqui -->
 
-    <!-- Aba de Listagem de Pacientes em Tratamento -->
-    <p-tabPanel header="Pacientes em Tratamento">
-      <p-table [value]="pacientsInTreatment">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>CPF</th>
-            <th>Nome</th>
-            <th>Idade</th>
-            <th>Endereço</th>
-            <th>Telefone</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-pacient>
-          <tr>
-            <td>{{ pacient.cpf }}</td>
-            <td>{{ pacient.nome }}</td>
-            <td>{{ pacient.idade }}</td>
-            <td>{{ pacient.endereco }}</td>
-            <td>{{ pacient.telefone }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-tabPanel>
-  </p-tabView>
+  <p-accordion>
+    <p-accordionTab header="Pesquisar por Nome">
+      <form [formGroup]="searchForm" (ngSubmit)="searchPacientsByName()">
+        <div class="p-field">
+          <input type="text" pInputText formControlName="searchValue" placeholder="Digite o nome do paciente" />
+        </div>
+        <button type="submit" pButton label="Buscar"></button>
+      </form>
+    </p-accordionTab>
+    <p-accordionTab header="Pesquisar por CPF">
+      <form [formGroup]="searchForm" (ngSubmit)="searchPacientsByCpf()">
+        <div class="p-field">
+          <input type="text" pInputText formControlName="searchValue" placeholder="Digite o CPF do paciente" />
+        </div>
+        <button type="submit" pButton label="Buscar"></button>
+      </form>
+    </p-accordionTab>
+  </p-accordion>
+
+  <p-table [value]="pacients">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>CPF</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Endereço</th>
+        <th>Telefone</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pacient>
+      <tr>
+        <td>{{ pacient.cpf }}</td>
+        <td>{{ pacient.nome }}</td>
+        <td>{{ pacient.idade }}</td>
+        <td>{{ pacient.endereco }}</td>
+        <td>{{ pacient.telefone }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <h3>Pacientes em Tratamento</h3>
+  <p-table [value]="pacientsInTreatment">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>CPF</th>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Endereço</th>
+        <th>Telefone</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pacient>
+      <tr>
+        <td>{{ pacient.cpf }}</td>
+        <td>{{ pacient.nome }}</td>
+        <td>{{ pacient.idade }}</td>
+        <td>{{ pacient.endereco }}</td>
+        <td>{{ pacient.telefone }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </p-card>

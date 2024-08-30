@@ -1,9 +1,10 @@
 export interface Prescription {
-  numero: number;
-  paciente: string;          // Pode ser o CPF ou ID, conforme o backend
-  doenca: string;            // Pode ser o CID ou ID, conforme o backend
+  numero: string;
+  paciente: string;
+  doenca: string;
   medicamento: string;
   dataConsulta: Date;
   tratamento: string;
-  status: string;            // Agora é uma string, visto que não há enum no backend
+  dataRevisao: Date;
+  status: string;
 }

@@ -18,21 +18,24 @@ export class DiseaseService {
 
   // Método para buscar uma doença por CID
   getDisease(cid: string): Observable<Disease> {
-    return this.http.get<Disease>(`${this.apiUrl}/${cid}`);
+    return this.http.get<Disease>(`${this.apiUrl}/buscar/${cid}`);
   }
 
   // Método para criar uma nova doença
   addDisease(disease: Disease): Observable<Disease> {
-    return this.http.post<Disease>(this.apiUrl, disease);
+    return this.http.post<Disease>(`${this.apiUrl}/criar`, disease);
   }
 
   // Método para atualizar uma doença existente
   updateDisease(cid: string, disease: Disease): Observable<Disease> {
-    return this.http.put<Disease>(`${this.apiUrl}/${cid}`, disease);
+    return this.http.put<Disease>(`${this.apiUrl}/atualizar/${cid}`, disease);
   }
 
   // Método para excluir uma doença
   deleteDisease(cid: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${cid}`);
-  }
+    const url = `${this.apiUrl}/delete/${cid}`;
+    console.log('URL:', url);
+    return this.http.delete<void>(url);
+}
+
 }

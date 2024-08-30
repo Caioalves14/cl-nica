@@ -19,16 +19,19 @@ export class PacientService {
     return this.http.get<Pacient>(`${this.apiUrl}/buscar-por-cpf?cpf=${cpf}`);
   }
 
-  updatePacient(cpf: string, pacient: Pacient): Observable<Pacient> {
-    return this.http.put<Pacient>(`${this.apiUrl}/${cpf}`, pacient);
+  updatePacient(id: string, pacient: Pacient): Observable<Pacient> {
+    return this.http.put<Pacient>(`${this.apiUrl}/atualizar${id}`, pacient);
   }
 
   addPacient(pacient: Pacient): Observable<Pacient> {
-    return this.http.post<Pacient>(this.apiUrl, pacient);
+    return this.http.post<Pacient>(`${this.apiUrl}/criar`, pacient);
   }
 
-  // Novo método para buscar pacientes em tratamento
-  getPacientsInTreatment(): Observable<Pacient[]> {
-    return this.http.get<Pacient[]>(`${this.apiUrl}/em-tratamento`);
+  deletePacient(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete${id}`);
+  }
+
+  getPacientsByName(nome: string): Observable<Pacient[]> {
+    return this.http.get<Pacient[]>(`${this.apiUrl}/buscar-por-nome?nome=${nome}`);
   }
 }

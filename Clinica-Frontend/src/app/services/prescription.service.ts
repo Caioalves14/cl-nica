@@ -7,19 +7,35 @@ import { Prescription } from '../models/prescription';
   providedIn: 'root'
 })
 export class PrescriptionService {
-  private apiUrl = 'http://localhost:8080/prescricoes';  // URL da API
+  private apiUrl = 'http://localhost:8080/prescricoes';
 
   constructor(private http: HttpClient) {}
 
-  // Método para buscar todas as prescrições
   getPrescriptions(): Observable<Prescription[]> {
     return this.http.get<Prescription[]>(this.apiUrl);
   }
 
-  // Método para buscar prescrições atrasadas
+  getPrescriptionById(id: string): Observable<Prescription> {
+    return this.http.get<Prescription>(`${this.apiUrl}/${id}`);
+  }
+
+  addPrescription(prescription: Prescription): Observable<Prescription> {
+    return this.http.post<Prescription>(this.apiUrl, prescription);
+  }
+
+  updatePrescription(id: string, prescription: Prescription): Observable<Prescription> {
+    return this.http.put<Prescription>(`${this.apiUrl}/${id}`, prescription);
+  }
+
+  deletePrescription(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
   getLatePrescriptions(): Observable<Prescription[]> {
     return this.http.get<Prescription[]>(`${this.apiUrl}/atrasadas`);
   }
 
-  // Outros métodos como createPrescription, updatePrescription, etc.
+  concludePrescription(id: string): Observable<Prescription> {
+    return this.http.put<Prescription>(`${this.apiUrl}/${id}/concluir`, {});
+  }
 }

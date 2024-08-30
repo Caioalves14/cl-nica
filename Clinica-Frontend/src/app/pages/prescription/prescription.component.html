@@ -1,4 +1,8 @@
 <p-card>
+  <p-toast></p-toast> <!-- Adicionei o p-toast aqui -->
+
+  <button pButton type="button" label="Cadastrar Nova Prescrição" icon="pi pi-plus" (click)="onNewPrescription()"></button>
+
   <p-tabView>
     <!-- Aba de Listagem de Todas as Prescrições -->
     <p-tabPanel header="Todas as Prescrições">
@@ -12,6 +16,7 @@
             <th>Data da Consulta</th>
             <th>Tratamento</th>
             <th>Status</th>
+            <th>Ações</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-prescription>
@@ -23,6 +28,9 @@
             <td>{{ prescription.dataConsulta | date }}</td>
             <td>{{ prescription.tratamento }}</td>
             <td>{{ prescription.status }}</td>
+            <td>
+              <button pButton type="button" label="Concluir" icon="pi pi-check" (click)="concludePrescription(prescription.numero)"></button>
+            </td>
           </tr>
         </ng-template>
       </p-table>
@@ -47,11 +55,52 @@
             <td>{{ prescription.paciente }}</td>
             <td>{{ prescription.doenca }}</td>
             <td>{{ prescription.medicamento }}</td>
-            <td>{{ prescription.dataConsulta | date:'shortDate' }}</td>
+            <td>{{ prescription.dataRevisao | date:'shortDate' }}</td>
             <td>{{ prescription.status }}</td>
           </tr>
         </ng-template>
       </p-table>
     </p-tabPanel>
   </p-tabView>
+
+  <p-dialog header="Cadastrar Prescrição" [(visible)]="displayModal" [modal]="true" [closable]="false">
+    <form [formGroup]="prescriptionForm" (ngSubmit)="addPrescription()">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="numero">Número</label>
+          <input id="numero" type="text" pInputText formControlName="numero" />
+        </div>
+        <div class="p-field">
+          <label for="paciente">Paciente</label>
+          <input id="paciente" type="text" pInputText formControlName="paciente" />
+        </div>
+        <div class="p-field">
+          <label for="doenca">Doença</label>
+          <input id="doenca" type="text" pInputText formControlName="doenca" />
+        </div>
+        <div class="p-field">
+          <label for="medicamento">Medicamento</label>
+          <input id="medicamento" type="text" pInputText formControlName="medicamento" />
+        </div>
+        <div class="p-field">
+          <label for="dataConsulta">Data da Consulta</label>
+          <input id="dataConsulta" type="date" pInputText formControlName="dataConsulta" />
+        </div>
+        <div class="p-field">
+          <label for="tratamento">Tratamento</label>
+          <input id="tratamento" type="text" pInputText formControlName="tratamento" />
+        </div>
+        <div class="p-field">
+          <label for="dataRevisao">Data da Revisão</label>
+          <input id="dataRevisao" type="date" pInputText formControlName="dataRevisao" />
+        </div>
+        <div class="p-field">
+          <label for="status">Status</label>
+          <input id="status" type="text" pInputText formControlName="status" />
+        </div>
+        <button type="submit" pButton label="Cadastrar"></button>
+        <button type="button" pButton label="Cancelar" (click)="displayModal=false"></button>
+      </div>
+    </form>
+  </p-dialog>
 </p-card>
