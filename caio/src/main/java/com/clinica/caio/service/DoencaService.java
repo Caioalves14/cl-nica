@@ -27,7 +27,13 @@ public class DoencaService {
         return doencaRepository.save(doenca);
     }
 
-    public void deletar(String cid) {
-        doencaRepository.deleteById(cid);
+    public boolean deletar(String cid) {
+        Optional<Doenca> doenca = doencaRepository.findById(cid);
+        if (doenca.isPresent()) {
+            doencaRepository.delete(doenca.get());
+            return true;  // Exclusão bem-sucedida
+        } else {
+            return false; // Doença não encontrada
+        }
     }
 }

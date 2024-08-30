@@ -28,6 +28,11 @@ public class Prescricao {
     private String tratamento;
     private LocalDate dataRevisao;
     private String status;
+
+    public Prescricao(int i, Paciente paciente2, Doenca doenca2, String string, LocalDate now, String string2,
+            String string3) {
+        //TODO Auto-generated constructor stub
+    }
     public long getNumero() {
         return numero;
     }

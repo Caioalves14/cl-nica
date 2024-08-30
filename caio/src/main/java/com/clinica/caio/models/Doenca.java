@@ -18,6 +18,10 @@ public class Doenca {
     @OneToMany(mappedBy = "doenca", cascade = CascadeType.ALL)
     private List<Prescricao> prescricoes;
 
+    public Doenca(String string, String string2, String string3) {
+        //TODO Auto-generated constructor stub
+    }
+
     public String getCid() {
         return cid;
     }

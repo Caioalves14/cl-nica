@@ -17,6 +17,10 @@ public class Paciente {
     private String telefone;
     private boolean emTratamento;
 
+    public Paciente(String string, String string2, int i, String string3, String string4) {
+        //TODO Auto-generated constructor stub
+    }
+
     public boolean isEmTratamento() {
         return emTratamento;
     }
