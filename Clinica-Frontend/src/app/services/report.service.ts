@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ReportService {
-  private apiUrl = 'http://localhost:3000/reports'; // Ajuste a URL conforme necessário
+  private apiUrl = 'http://localhost:4200/reports'; // Ajuste a URL conforme necessário
 
   constructor(private http: HttpClient) {}
 

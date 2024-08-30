@@ -59,4 +59,8 @@ public class PacienteService {
     public List <Paciente> listarTodosPacientes(){
         return pacienteRepository.findAll();
     }
+
+    public List<Paciente> buscarPacientesEmTratamento() {
+        return pacienteRepository.findByEmTratamento(true);
+    }
 }

@@ -15,6 +15,15 @@ public class Paciente {
     private int idade;
     private String endereco;
     private String telefone;
+    private boolean emTratamento;
+
+    public boolean isEmTratamento() {
+        return emTratamento;
+    }
+
+    public void setEmTratamento(boolean emTratamento) {
+        this.emTratamento = emTratamento;
+    }
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     private List<Prescricao> prescricoes;

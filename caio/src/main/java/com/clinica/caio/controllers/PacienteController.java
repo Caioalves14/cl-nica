@@ -78,4 +78,9 @@ public class PacienteController {
          List<Paciente> pacientes = pacienteService.listarTodosPacientes();
          return ResponseEntity.ok(pacientes);
     }
+
+    @GetMapping("/em-tratamento")
+    public List<Paciente> buscarPacientesEmTratamento() {
+        return pacienteService.buscarPacientesEmTratamento();
+    }
 }

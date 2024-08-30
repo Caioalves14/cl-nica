@@ -8,4 +8,5 @@ import com.clinica.caio.models.Paciente;
 
 public interface PacienteRepository extends JpaRepository<Paciente, String>{
     List<Paciente> findByNomeContaining(String nome);
+    List<Paciente> findByEmTratamento(boolean emTratamento);
 }
