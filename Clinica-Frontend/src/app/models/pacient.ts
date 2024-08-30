@@ -4,4 +4,5 @@ export interface Pacient {
   idade: number;
   endereco: string;
   telefone: string;
+  revisao?: boolean; // Adicione esta linha
 }

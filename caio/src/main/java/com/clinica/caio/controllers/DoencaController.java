@@ -53,7 +53,7 @@ public class DoencaController {
         return ResponseEntity.ok(doencaService.salvar(doenca));
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletar(@PathVariable String id){
         if (!doencaService.buscarPorId(id).isPresent()) {
             return ResponseEntity.notFound().build();

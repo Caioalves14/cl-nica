@@ -16,6 +16,10 @@ export class PacientComponent implements OnInit {
   pacientsInTreatment: Pacient[] = [];
   pacientForm: FormGroup;
   searchForm: FormGroup;
+  searchOptions = [
+    { label: 'Nome', value: 'name' },
+    { label: 'CPF', value: 'cpf' }
+  ];
   error: string | null = null;
   displayModal: boolean = false;
 
@@ -33,6 +37,7 @@ export class PacientComponent implements OnInit {
     });
 
     this.searchForm = this.fb.group({
+      searchType: ['', Validators.required],
       searchValue: ['', Validators.required]
     });
   }
@@ -42,112 +47,65 @@ export class PacientComponent implements OnInit {
     this.loadPacientsInTreatment();
   }
 
-  loadPacients() {
-    this.pacientService.getPacients().subscribe(
-      (data: Pacient[]) => {
-        this.pacients = data;
-      },
-      (error: any) => {
-        this.error = 'Erro ao carregar pacientes';
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
-      }
-    );
+  async loadPacients() {
+    try {
+      this.pacients = await this.pacientService.getPacients();
+    } catch (error) {
+      this.error = 'Erro ao carregar pacientes';
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
+    }
   }
 
-  loadPacientsInTreatment() {
-    this.pacientService.getPacientsInTreatment().subscribe(
-      (data: Pacient[]) => {
-        this.pacientsInTreatment = data;
-      },
-      (error: any) => {
-        this.error = 'Erro ao carregar pacientes em tratamento';
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
-      }
-    );
+  async loadPacientsInTreatment() {
+    try {
+      const data = await this.pacientService.getPacients();
+      this.pacientsInTreatment = data.filter((pacient: Pacient) => !pacient.revisao);
+    } catch (error) {
+      this.error = 'Erro ao carregar pacientes em tratamento';
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
+    }
   }
 
-  onNewPacient() {
-    this.pacientForm.reset();
-    this.displayModal = true;
+  async searchPacients() {
+    const { searchType, searchValue } = this.searchForm.value;
+    if (searchType === 'name') {
+      await this.searchPacientsByName(searchValue);
+    } else if (searchType === 'cpf') {
+      await this.searchPacientsByCpf(searchValue);
+    }
   }
 
-  async addPacient() {
+  async searchPacientsByName(name: string) {
+    try {
+      this.pacients = await this.pacientService.getPacientsByName(name);
+    } catch (error) {
+      this.error = 'Erro ao buscar pacientes por nome';
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
+    }
+  }
+
+  async searchPacientsByCpf(cpf: string) {
+    try {
+      const data = await this.pacientService.getPacientByCpf(cpf);
+      this.pacients = [data]; // Certifique-se de que está lidando com um único paciente
+    } catch (error) {
+      this.error = 'Erro ao buscar pacientes por CPF';
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
+    }
+  }
+
+  async savePacient() {
     if (this.pacientForm.valid) {
       const newPacient: Pacient = this.pacientForm.value;
-
       try {
-        const exists = await this.checkCpf(newPacient.cpf);
-        if (exists) {
-          this.messageService.add({ severity: 'warn', summary: 'Aviso', detail: 'Paciente com este CPF já está cadastrado' });
-        } else {
-          this.pacientService.addPacient(newPacient).subscribe(
-            () => {
-              this.pacients.push(newPacient);
-              this.pacientForm.reset();
-              this.displayModal = false;
-              this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Paciente cadastrado com sucesso' });
-            },
-            (error: any) => {
-              this.error = 'Erro ao cadastrar paciente';
-              this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
-            }
-          );
-        }
+        await this.pacientService.addPacient(newPacient);
+        await this.loadPacients();
+        this.displayModal = false;
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Paciente cadastrado com sucesso' });
       } catch (error) {
-        this.error = 'Erro ao verificar CPF';
+        this.error = 'Erro ao cadastrar paciente';
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
       }
     }
-  }
-
-  async checkCpf(cpf: string): Promise<boolean> {
-    try {
-      const pacient = await this.pacientService.getPacientByCpf(cpf).toPromise();
-      return !!pacient;
-    } catch {
-      return false;
-    }
-  }
-
-  deletePacient(id: string) {
-    // Verificar se há prescrições associadas antes de excluir
-    this.pacientService.deletePacient(id).subscribe(
-      () => {
-        this.pacients = this.pacients.filter(p => p.cpf !== id);
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Paciente excluído com sucesso' });
-      },
-      (error: any) => {
-        this.error = 'Erro ao excluir paciente';
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
-      }
-    );
-  }
-
-  searchPacientsByName() {
-    const { searchValue } = this.searchForm.value;
-    this.pacientService.getPacientsByName(searchValue).subscribe(
-      (data: Pacient[]) => {
-        this.pacients = data;
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Pacientes encontrados' });
-      },
-      (error: any) => {
-        this.error = 'Erro ao buscar pacientes por nome';
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
-      }
-    );
-  }
-
-  searchPacientsByCpf() {
-    const { searchValue } = this.searchForm.value;
-    this.pacientService.getPacientsByCpf(searchValue).subscribe(
-      (data: Pacient[]) => {
-        this.pacients = data;
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Pacientes encontrados' });
-      },
-      (error: any) => {
-        this.error = 'Erro ao buscar pacientes por CPF';
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: this.error });
-      }
-    );
   }
 }

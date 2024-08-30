@@ -1,24 +1,17 @@
 <p-card>
   <p-toast></p-toast> <!-- Adicionei o p-toast aqui -->
 
-  <p-accordion>
-    <p-accordionTab header="Pesquisar por Nome">
-      <form [formGroup]="searchForm" (ngSubmit)="searchPacientsByName()">
-        <div class="p-field">
-          <input type="text" pInputText formControlName="searchValue" placeholder="Digite o nome do paciente" />
-        </div>
-        <button type="submit" pButton label="Buscar"></button>
-      </form>
-    </p-accordionTab>
-    <p-accordionTab header="Pesquisar por CPF">
-      <form [formGroup]="searchForm" (ngSubmit)="searchPacientsByCpf()">
-        <div class="p-field">
-          <input type="text" pInputText formControlName="searchValue" placeholder="Digite o CPF do paciente" />
-        </div>
-        <button type="submit" pButton label="Buscar"></button>
-      </form>
-    </p-accordionTab>
-  </p-accordion>
+  <form [formGroup]="searchForm" (ngSubmit)="searchPacients()">
+    <div class="p-field">
+      <p-dropdown [options]="searchOptions" formControlName="searchType" placeholder="Selecione o tipo de pesquisa"></p-dropdown>
+    </div>
+    <div class="p-field">
+      <input type="text" pInputText formControlName="searchValue" placeholder="Digite o valor de pesquisa" />
+    </div>
+    <button type="submit" pButton label="Buscar"></button>
+  </form>
+
+  <button type="button" pButton label="Cadastrar Paciente" icon="pi pi-plus" (click)="displayModal = true"></button>
 
   <p-table [value]="pacients">
     <ng-template pTemplate="header">
@@ -62,4 +55,33 @@
       </tr>
     </ng-template>
   </p-table>
+
+  <p-dialog header="Cadastrar Paciente" [(visible)]="displayModal" [modal]="true" [closable]="false">
+    <form [formGroup]="pacientForm" (ngSubmit)="savePacient()">
+      <div class="p-field">
+        <label for="cpf">CPF</label>
+        <input id="cpf" type="text" pInputText formControlName="cpf" />
+      </div>
+      <div class="p-field">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" pInputText formControlName="nome" />
+      </div>
+      <div class="p-field">
+        <label for="idade">Idade</label>
+        <input id="idade" type="number" pInputText formControlName="idade" />
+      </div>
+      <div class="p-field">
+        <label for="endereco">Endereço</label>
+        <input id="endereco" type="text" pInputText formControlName="endereco" />
+      </div>
+      <div class="p-field">
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="text" pInputText formControlName="telefone" />
+      </div>
+      <div class="p-field">
+        <button type="submit" pButton label="Salvar"></button>
+        <button type="button" pButton label="Cancelar" class="p-button-secondary" (click)="displayModal = false"></button>
+      </div>
+    </form>
+  </p-dialog>
 </p-card>

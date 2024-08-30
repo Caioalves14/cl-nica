@@ -107,11 +107,12 @@ export class PrescriptionComponent implements OnInit {
     doc.text(`Prescrição Número: ${prescription.numero}`, 10, 10);
     doc.text(`Paciente: ${prescription.paciente}`, 10, 20);
     doc.text(`Doença: ${prescription.doenca}`, 10, 30);
-    doc.text(`Medicamento: ${prescription.medicamento}`, 10, 40);
+    doc.text(`Nome do Remédio: ${prescription.nomeRemedio}`, 10, 40); // Updated line
     doc.text(`Data da Consulta: ${new Date(prescription.dataConsulta).toLocaleDateString()}`, 10, 50);
     doc.text(`Tratamento: ${prescription.tratamento}`, 10, 60);
     doc.text(`Data da Revisão: ${new Date(prescription.dataRevisao).toLocaleDateString()}`, 10, 70);
     doc.text(`Status: ${prescription.status}`, 10, 80);
     doc.save(`prescricao_${prescription.numero}.pdf`);
   }
+
 }
